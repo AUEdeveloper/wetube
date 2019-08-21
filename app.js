@@ -2,8 +2,9 @@ import express from "express";
 
 //middlewares
 import helmet from "helmet";
-import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import { localsMiddleware } from "./middlewares";
 
 //routes
 import { globalRoutes, usersRoutes, videosRoutes } from "./routes";
@@ -15,6 +16,9 @@ import globalRouter from "./routers/globalRouter";
 
 const app = express();
 
+//middleware for security
+app.use(helmet());
+
 //set pug as a view engine fro express
 app.set("view engine", "pug");
 
@@ -22,7 +26,7 @@ app.set("view engine", "pug");
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(helmet());
+app.use(localsMiddleware);
 
 //applying routers
 app.use(globalRoutes.HOME, globalRouter);
