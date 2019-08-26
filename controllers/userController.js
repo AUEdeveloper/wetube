@@ -6,14 +6,14 @@ export const getJoin = (req, res) => {
 
 export const postJoin = (req, res) => {
   const {
-    body: { name, email, password, password2 }
+    body: { password, password2 }
   } = req;
   if (password !== password2) {
     res.status(400);
     res.render("join", { pageTitle: "Join" });
   } else {
-    //TODO: Register User
-    //TODO: Log user in
+    // TODO: Register User
+    // TODO: Log user in
     res.redirect(globalRoutes.HOME);
   }
 };
@@ -28,11 +28,11 @@ export const postLogin = (req, res) => {
 export const userDetails = (req, res) => res.send("userDetails");
 
 export const logout = (req, res) => {
-  //TODO: Process Log out
+  // TODO: Process Log out
   res.redirect(globalRoutes.HOME);
 };
 
-//export const users = (req, res) => res.send("users");
+// export const users = (req, res) => res.send("users");
 export const editProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
 export const changePassword = (req, res) =>
