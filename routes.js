@@ -29,6 +29,12 @@ export const videosRoutes = {
       return "/:id";
     }
   },
-  EDIT_VIDEO: "/:id/edit",
+  EDIT_VIDEO: function(id) {
+    if (id) {
+      return `${this.VIDEOS}/${id}/edit`;
+    } else {
+      return "/:id/edit";
+    }
+  },
   DELETE_VIDEO: "/:id/delete"
 };

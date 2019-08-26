@@ -22,6 +22,8 @@ app.use(helmet());
 //set pug as a view engine fro express
 app.set("view engine", "pug");
 
+app.use("/uploads", express.static("uploads"));
+
 //applying middlewares
 app.use(cookieParser());
 app.use(bodyParser.json());
