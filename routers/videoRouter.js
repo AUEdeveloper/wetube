@@ -20,6 +20,6 @@ videoRouter.get(videosRoutes.VIDEO_DETAILS(), videoDetails);
 videoRouter.get(videosRoutes.EDIT_VIDEO(), getEditVideo);
 videoRouter.post(videosRoutes.EDIT_VIDEO(), postEditVideo);
 
-videoRouter.get(videosRoutes.DELETE_VIDEO, deleteVideo);
+videoRouter.get(videosRoutes.DELETE_VIDEO(), deleteVideo);
 
 export default videoRouter;

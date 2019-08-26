@@ -3,7 +3,7 @@ import Video from "../models/Video";
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({});
+    const videos = await Video.find({}).sort({ _id: -1 });
     res.render("home", { pageTitle: "Home", videos });
   } catch (error) {
     console.log(error);
@@ -42,7 +42,7 @@ export const videoDetails = async (req, res) => {
   } = req;
   try {
     const video = await Video.findById(id);
-    res.render("videoDetails", { pageTitle: "Video Details", video });
+    res.render("videoDetails", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
     res.redirect(globalRoutes.HOME);
@@ -76,5 +76,14 @@ export const postEditVideo = async (req, res) => {
   }
 };
 
-export const deleteVideo = (req, res) =>
-  res.send("deleteVideo", { pageTitle: "Delete video" });
+export const deleteVideo = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+  try {
+    await Video.findByIdAndRemove(id);
+  } catch (error) {
+    console.log(error);
+  }
+  res.redirect(globalRoutes.HOME);
+};

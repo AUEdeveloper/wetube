@@ -36,5 +36,11 @@ export const videosRoutes = {
       return "/:id/edit";
     }
   },
-  DELETE_VIDEO: "/:id/delete"
+  DELETE_VIDEO: function(id) {
+    if (id) {
+      return `${this.VIDEOS}/${id}/delete`;
+    } else {
+      return "/:id/delete";
+    }
+  }
 };
