@@ -1,21 +1,22 @@
 header.header
-  .header__column
-    a(href=globalRoutes.HOME)
-      i.fab.fa-youtube
-  .header__column
-    form(action=globalRoutes.SEARCH, method="get")
-      input(type="text", placeholder="Search by term...", name="term")
-  .header__column
-    ul
-      if !user.isAuthenticated
-        li
-          a(href=globalRoutes.JOIN) Join
-        li
-          a(href=globalRoutes.LOGIN) Log in
-      else
-        li
-          a(href=`/videos${videosRoutes.UPLOAD}`) Upload
-        li
-          a(href=usersRoutes.USER_DETAILS(user.id)) Profile
-        li
-          a(href=globalRoutes.LOGOUT) Log out
+  .header__wrapper
+    .header__column
+      a(href=globalRoutes.HOME)
+        i.fab.fa-youtube
+    .header__column
+      form(action=globalRoutes.SEARCH, method="get")
+        input(type="text", placeholder="Search by term...", name="term")
+    .header__column
+      ul
+        if !user.isAuthenticated
+          li
+            a(href=globalRoutes.JOIN) Join
+          li
+            a(href=globalRoutes.LOGIN) Log in
+        else
+          li
+            a(href=`/videos${videosRoutes.UPLOAD}`) Upload
+          li
+            a(href=usersRoutes.USER_DETAILS(user.id)) Profile
+          li
+            a(href=globalRoutes.LOGOUT) Log out

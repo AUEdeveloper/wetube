@@ -10,7 +10,7 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.videosRoutes = videosRoutes;
   res.locals.user = {
     id: 1,
-    isAuthenticated: true
+    isAuthenticated: false
   };
   next();
 };
