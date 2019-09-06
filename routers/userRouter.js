@@ -5,11 +5,12 @@ import {
   editProfile,
   changePassword
 } from "../controllers/userController";
+import { onlyPrivate } from "../middlewares";
 
 const userRouter = express.Router();
 
-userRouter.get(usersRoutes.EDIT_PROFILE, editProfile);
-userRouter.get(usersRoutes.CHANGE_PASSWORD, changePassword);
+userRouter.get(usersRoutes.EDIT_PROFILE, onlyPrivate, editProfile);
+userRouter.get(usersRoutes.CHANGE_PASSWORD, onlyPrivate, changePassword);
 userRouter.get(usersRoutes.USER_DETAILS(), userDetails);
 
 export default userRouter;

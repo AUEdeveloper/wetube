@@ -8,11 +8,24 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.usersRoutes = usersRoutes;
   res.locals.globalRoutes = globalRoutes;
   res.locals.videosRoutes = videosRoutes;
-  res.locals.user = {
-    id: 1,
-    isAuthenticated: false
-  };
+  res.locals.user = req.user || null;
   next();
+};
+
+export const onlyPublic = (req, res, next) => {
+  if (req.user) {
+    res.redirect(globalRoutes.HOME);
+  } else {
+    next();
+  }
+};
+
+export const onlyPrivate = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect(globalRoutes.HOME);
+  }
 };
 
 export const uploadVideo = multerVideo.single("videoFile");
