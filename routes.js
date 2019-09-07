@@ -3,7 +3,9 @@ export const globalRoutes = {
   JOIN: "/join",
   LOGIN: "/login",
   LOGOUT: "/logout",
-  SEARCH: "/search"
+  SEARCH: "/search",
+  GITHUB: "/auth/github",
+  GITHUB_CALLBACK: "/auth/github/callback"
 };
 
 export const usersRoutes = {
