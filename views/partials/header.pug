@@ -8,7 +8,7 @@ header.header
         input(type="text", placeholder="Search by term...", name="term")
     .header__column
       ul
-        if !user
+        if !loggedUser
           li
             a(href=globalRoutes.JOIN) Join
           li
@@ -17,6 +17,6 @@ header.header
           li
             a(href=`/videos${videosRoutes.UPLOAD}`) Upload
           li
-            a(href=usersRoutes.USER_DETAILS(user.id)) Profile
+            a(href=usersRoutes.ME) Profile
           li
             a(href=globalRoutes.LOGOUT) Log out

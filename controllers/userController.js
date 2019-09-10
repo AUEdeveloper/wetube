@@ -6,25 +6,26 @@ export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join" });
 };
 
-export const postJoin = async (req, res, next) => {
+export const postJoin = async (_, __, profile, cb) => {
   const {
-    body: { name, email, password, password2 }
-  } = req;
-  if (password !== password2) {
-    res.status(400);
-    res.render("join", { pageTitle: "Join" });
-  } else {
-    try {
-      const user = await User({
-        name,
-        email
-      });
-      await User.register(user, password);
-      next();
-    } catch (error) {
-      console.log(error);
-      res.redirect(globalRoutes.HOME);
+    _json: { id, avatar_url: avatarUrl, name, email }
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.githubId = id;
+      user.save();
+      return cb(null, user);
     }
+    const newUser = await User.create({
+      email,
+      name,
+      githubId: id,
+      avatarUrl
+    });
+    return cb(null, newUser);
+  } catch (error) {
+    return cb(error);
   }
 };
 
@@ -37,20 +38,51 @@ export const postLogin = passport.authenticate("local", {
   successRedirect: globalRoutes.HOME
 });
 
-export const githubLogin = passport.authenticate("github", {
-  successFlash: "Welcome",
-  failureFlash: "Can't log in at this time"
-});
+export const githubLogin = passport.authenticate("github");
 
-export const githubLoginCallback = (accessToken, refreshToken, profile, cb) => {
-  console.log(accessToken, refreshToken, profile, cb);
+export const githubLoginCallback = async (_, __, profile, cb) => {
+  const {
+    _json: { id, avatar_url: avatarUrl, name, email }
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.githubId = id;
+      user.save();
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      email,
+      name,
+      githubId: id,
+      avatarUrl
+    });
+    return cb(null, newUser);
+  } catch (error) {
+    return cb(error);
+  }
 };
 
-export const postGithubLogin = (req, res) => {
+export const postGithubLogIn = (req, res) => {
   res.redirect(globalRoutes.HOME);
 };
 
-export const userDetails = (req, res) => res.send("userDetails");
+export const getMe = (req, res) => {
+  res.render("userDetails", { pageTitle: "Me", user: req.user });
+};
+
+export const userDetails = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+  try {
+    const user = await User.findById(id);
+    res.render("userDetails", { pageTitle: "User Details", user });
+  } catch (error) {
+    console.log(error);
+    res.redirect(globalRoutes.HOME);
+  }
+};
 
 export const logout = (req, res) => {
   // TODO: Process Log out
@@ -59,7 +91,7 @@ export const logout = (req, res) => {
 };
 
 // export const users = (req, res) => res.send("users");
-export const editProfile = (req, res) =>
+export const getEditProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
 export const changePassword = (req, res) =>
   res.render("changePassword", { pageTitle: "Change Password" });

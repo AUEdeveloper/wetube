@@ -18,7 +18,8 @@ export const usersRoutes = {
     }
   },
   EDIT_PROFILE: "/edit-profile",
-  CHANGE_PASSWORD: "/change-password"
+  CHANGE_PASSWORD: "/change-password",
+  ME: "/me"
 };
 
 export const videosRoutes = {
